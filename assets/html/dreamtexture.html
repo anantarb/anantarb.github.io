@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="description"
+            content="DreamTexture">
+        <meta name="keywords" content="DreamTexture, SDS, Diffusion">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>DreamTexture: Shape from Virtual Texture with Analysis by Augmentation</title>
+        <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+            rel="stylesheet">
+        <link rel="stylesheet" href="../triplanenet/css/bulma.min.css">
+        <link rel="stylesheet" href="../triplanenet/css/bulma-carousel.min.css">
+        <link rel="stylesheet" href="../triplanenet/css/bulma-slider.min.css">
+        <link rel="stylesheet" href="../triplanenet/css/fontawesome.all.min.css">
+        <link rel="stylesheet"
+            href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+        <link rel="stylesheet" href="../triplanenet/css/index.css">
+        <link rel="icon" href="../triplanenet/images/favicon.svg">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script defer src="../triplanenet/js/fontawesome.all.min.js"></script>
+        <script src="../triplanenet/js/bulma-carousel.min.js"></script>
+        <script src="../triplanenet/js/bulma-slider.min.js"></script>
+        <script src="../triplanenet/js/index.js"></script>
+    </head>
+    <body>
+        <section class="hero">
+            <div class="hero-body">
+                <div class="container is-max-desktop">
+                    <div class="columns is-centered">
+                        <div class="column has-text-centered">
+                            <h1 class="title is-1 publication-title">DreamTexture: Shape from Virtual Texture with Analysis by Augmentation</h1>
+                            <!-- <center>
+                                <div class="publication-venue">arXiv 2025</div>
+                            </center> -->
+                            <div class="is-size-5 publication-authors">
+                                <span class="author-block">
+                                <a href="https://anantarb.github.io/index">Ananta R. Bhattarai</a><sup>1</sup>,</span>
+                                <span class="author-block">
+                                <a href="https://xingzhehe.github.io">Xingzhe He</a><sup>2</sup>,</span>
+                                <span class="author-block">
+                                <a href="https://www.cs.ubc.ca/~sheffa/">Alla Sheffer</a><sup>2</sup>,
+                                </span>
+                                <span class="author-block">
+                                <a href="http://helge.rhodin.de">Helge Rhodin</a><sup>1,2</sup>
+                                </span>
+                            </div>
+                            <div class="is-size-5 publication-authors">
+                                <span class="author-block"><sup>1</sup>Bielefeld University</span>
+                                <span class="author-block"><sup>2</sup>University of British Columbia</span>
+                            </div>
+                            <div class="column has-text-centered">
+                                <div class="publication-links">
+                                    <!-- PDF Link. -->
+                                    <span class="link-block">
+                                    <a href="https://arxiv.org/abs/2503.16412"
+                                        class="external-link button is-normal is-rounded is-dark">
+                                    <span class="icon">
+                                    <i class="fas fa-file-pdf"></i>
+                                    </span>
+                                    <span>Paper</span>
+                                    </a>
+                                    </span>
+                                    <!-- Video Link. -->
+                                    <!-- Code Link. -->
+                                    <span class="link-block">
+                                    <a href="https://github.com/anantarb/dreamtexture"
+                                        class="external-link button is-normal is-rounded is-dark">
+                                    <span class="icon">
+                                    <i class="fab fa-github"></i>
+                                    </span>
+                                    <span>Code</span>
+                                    </a>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="hero teaser">
+            <div class="container is-max-desktop">
+                <div class="hero-body">
+                    <img src="../dreamtexture/images/teaser.png"/>
+                    <div class="content has-text-justified">
+                        While existing analysis-by-synthesis approaches (left) rely on volumetric rendering of multiple real or virtual views, <span class="dnerf">DreamTexture</span> (right) takes one image as input, augments a virtual texture, and optimizes the output depth map by aligning the real and virtual shape cues with a pre-trained image prior via Score Distillation Sampling (SDS). This Analysis by Augmentation (AbA) approach reconstructs depth  without any 3D supervision and unlike classical shape from texture, it applies to both textured and textureless objects.
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="section">
+            <div class="container is-max-desktop">
+                <!-- Abstract. -->
+                <div class="columns is-centered has-text-centered">
+                    <div class="column is-four-fifths">
+                        <h2 class="title is-3">Abstract</h2>
+                        <div class="content has-text-justified">
+                            <p>
+                                DreamFusion established a new paradigm for unsupervised 3D reconstruction from virtual views by combining advances in generative models and differentiable rendering. However, the underlying multi-view rendering, along with supervision from large-scale generative models, is computationally expensive and under-constrained.
+                            </p>
+                            <p>
+                                We propose <span class="dnerf">DreamTexture</span>, a novel Shape-from-Virtual-Texture approach that leverages monocular depth cues to reconstruct 3D objects. Our method textures an input image by aligning a virtual texture with the real depth cues in the input, exploiting the inherent understanding of monocular geometry encoded in modern diffusion models. We then reconstruct depth from the virtual texture deformation with a new conformal map optimization, which alleviates memory-intensive volumetric representations.
+                            </p>
+                            <p>
+                                Our experiments reveal that generative models possess an understanding of monocular shape cues, which can be extracted by augmenting and aligning texture cues&mdash;a novel monocular reconstruction paradigm that we call Analysis by Augmentation.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="section">
+            <div class="container is-max-desktop">
+                <!--/ Abstract. -->
+                <!-- Paper video. -->
+                <div class="columns is-centered has-text-centered">
+                    <div class="column is-four-fifths">
+                        <h2 class="title is-3">Video</h2>
+                        <div class="publication-video">
+                            <iframe src="https://drive.google.com/file/d/1m-15UEqcqrp8ExUUU4Nz2mb2LpkxKeSi/preview" width="640" height="480" allow="autoplay"></iframe>
+                        </div>
+                    </div>
+                </div>
+                <!--/ Paper video. -->
+            </div>
+        </section>
+        <section class="section">
+            <div class="container is-max-desktop">
+                <!-- Overview. -->
+                <div class="columns is-centered" style="margin-top: 15px">
+                    <div class="column is-full-width">
+                        <h2 class="title is-3">
+                            <center>Method Overview</center>
+                        </h2>
+                        <img src="../dreamtexture/images/overview.png"/>
+                        <div class="content has-text-justified" style="padding-top: 15px">
+                            <p><span class="dnerf">DreamTexture</span> follows a two-stage pipeline. </p>
+                            <p>In Stage I, we use the SDS loss to faithfully augment the texture on the input image, producing texture coordinates that align the virtual texture with depth cues in the input image.
+                            </p>
+                            <p>In Stage II, we apply shape from virtual texture by viewing the depth map as the z-coordinates of a 3D mesh and optimize it using the LSCM energy, minimizing angular texture distortion.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="section">
+            <div class="container is-max-desktop">
+                <h2 class="title is-3">
+                    <center>Comparison with SOTA</center>
+                </h2>
+                <div class="content has-text-justified" style="padding-top: 15px">
+                    <p><span class="dnerf">DreamTexture</span> reconstructs depth with higher fidelity, achieves smoother surface normals, and generates more accurate novel views compared to DreamFusion (DF) and RealFusion (RF) while being faster.
+                </div>
+                <div class="container" style="max-width: 600px; margin: 0 auto;">
+                    <div id="results-carousel" class="carousel results-carousel">
+                        <div class="item item-steve3">
+                            <video poster="" id="steve1" autoplay controls muted loop playsinline height="100%">
+                                <source src="../dreamtexture/videos/1.mp4"
+                                    type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="item item-steve3">
+                            <video poster="" id="steve2" autoplay controls muted loop playsinline height="100%">
+                                <source src="../dreamtexture/videos/2.mp4"
+                                    type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="item item-steve3">
+                            <video poster="" id="steve3" autoplay controls muted loop playsinline height="100%">
+                                <source src="../dreamtexture/videos/3.mp4"
+                                    type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="item item-steve3">
+                            <video poster="" id="steve4" autoplay controls muted loop playsinline height="100%">
+                                <source src="../dreamtexture/videos/4.mp4"
+                                    type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="item item-steve3">
+                            <video poster="" id="steve5" autoplay controls muted loop playsinline height="100%">
+                                <source src="../dreamtexture/videos/5.mp4"
+                                    type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="item item-steve3">
+                            <video poster="" id="steve6" autoplay controls muted loop playsinline height="100%">
+                                <source src="../dreamtexture/videos/6.mp4"
+                                    type="video/mp4">
+                            </video>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="section">
+            <div class="container is-max-desktop">
+                <!-- Concurrent Work. -->
+                <div class="columns is-centered">
+                    <div class="column is-full-width">
+                        <h2 class="title is-3">
+                            <center>Related Links</center>
+                        </h2>
+                        <div class="content has-text-justified">
+                            <p>
+                                For more works on similar tasks, please check out
+                            </p>
+                            <p>
+                                <a href="https://github.com/threestudio-project/threestudio">threestudio</a> which is a unified framework for 3D content creation from text prompts, single images, and few-shot images, by lifting 2D text-to-image generation models.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <!--/ Concurrent Work. -->
+            </div>
+        </section>
+        <section class="section" id="BibTeX">
+            <div class="container is-max-desktop content">
+                <h2 class="title is-3">
+                    <center>BibTeX</center>
+                </h2>
+                <pre><code>@article{bhattarai2025dreamtexture,
+        title={DreamTexture: Shape from Virtual Texture with Analysis by Augmentation},
+        author={Ananta R. Bhattarai and Xingzhe He and Alla Sheffer and Helge Rhodin},
+        year={2025},
+        url={https://arxiv.org/abs/2503.16412}
+}
+                </code></pre>
+            </div>
+        </section>
+        <footer class="footer">
+            <div class="container">
+                <div class="content has-text-centered">
+                    <a class="icon-link"
+                        href="https://arxiv.org/pdf/2503.16412">
+                    <i class="fas fa-file-pdf"></i>
+                    </a>
+                    <a class="icon-link" href="https://github.com/anantarb" class="external-link" disabled>
+                    <i class="fab fa-github"></i>
+                    </a>
+                </div>
+                <div class="columns is-centered">
+                    <div class="column is-8">
+                        <div class="content">
+                            <p style="text-align:center">
+                                Source code mainly borrowed from <a
+                                    href="https://keunhong.com">Keunhong Park's <a
+                                    href="https://nerfies.github.io">Nerfies website</a>.
+                            </p>
+                            <p style="text-align:center">
+                                Please contact <a href="mailto:ananta.bhattarai@uni-bielefeld.de">Ananta Bhattarai</a> for feedback and questions.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </body>
+</html>
