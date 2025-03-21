@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="description"
+            content="TriPlaneNet">
+        <meta name="keywords" content="TriPlaneNet, EG3D">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>TriPlaneNet: An Encoder for EG3D Inversion</title>
+        <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+            rel="stylesheet">
+        <link rel="stylesheet" href="../triplanenet/css/bulma.min.css">
+        <link rel="stylesheet" href="../triplanenet/css/bulma-carousel.min.css">
+        <link rel="stylesheet" href="../triplanenet/css/bulma-slider.min.css">
+        <link rel="stylesheet" href="../triplanenet/css/fontawesome.all.min.css">
+        <link rel="stylesheet"
+            href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+        <link rel="stylesheet" href="../triplanenet/css/index.css">
+        <link rel="icon" href="../triplanenet/images/favicon.svg">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script defer src="../triplanenet/js/fontawesome.all.min.js"></script>
+        <script src="../triplanenet/js/bulma-carousel.min.js"></script>
+        <script src="../triplanenet/js/bulma-slider.min.js"></script>
+        <script src="../triplanenet/js/index.js"></script>
+    </head>
+    <body>
+        <section class="hero">
+            <div class="hero-body">
+                <div class="container is-max-desktop">
+                    <div class="columns is-centered">
+                        <div class="column has-text-centered">
+                            <h1 class="title is-1 publication-title">TriPlaneNet: An Encoder for EG3D Inversion</h1>
+                            <center>
+                                <div class="publication-venue">WACV 2024</div>
+                            </center>
+                            <div class="is-size-5 publication-authors">
+                                <span class="author-block">
+                                <a href="https://anantarb.github.io/index">Ananta R. Bhattarai</a><sup>1</sup>,</span>
+                                <span class="author-block">
+                                <a href="https://www.niessnerlab.org/members/matthias_niessner/profile.html">Matthias Nießner</a><sup>1</sup>,</span>
+                                <span class="author-block">
+                                <a href="https://seva100.github.io">Artem Sevastopolsky</a><sup>1</sup>,
+                                </span>
+                            </div>
+                            <div class="is-size-5 publication-authors">
+                                <span class="author-block"><sup>1</sup>Technical University of Munich (TUM)</span>
+                            </div>
+                            <div class="column has-text-centered">
+                                <div class="publication-links">
+                                    <!-- PDF Link. -->
+                                    <span class="link-block">
+                                    <a href="http://arxiv.org/abs/2303.13497"
+                                        class="external-link button is-normal is-rounded is-dark">
+                                    <span class="icon">
+                                    <i class="fas fa-file-pdf"></i>
+                                    </span>
+                                    <span>Paper v2</span>
+                                    </a>
+                                    </span>
+                                    <span class="link-block">
+                                    <a href="https://arxiv.org/abs/2303.13497v1"
+                                        class="external-link button is-normal is-rounded is-dark">
+                                    <span class="icon">
+                                    <i class="fas fa-file-pdf"></i>
+                                    </span>
+                                    <span>Paper v1</span>
+                                    </a>
+                                    </span>
+                                    <!-- Video Link. -->
+                                    <span class="link-block">
+                                    <a href="https://youtu.be/NttXgBE12ec&t"
+                                        class="external-link button is-normal is-rounded is-dark">
+                                    <span class="icon">
+                                    <i class="fab fa-youtube"></i>
+                                    </span>
+                                    <span>Video</span>
+                                    </a>
+                                    </span>
+                                    <!-- Code Link. -->
+                                    <span class="link-block">
+                                    <a href="https://github.com/anantarb/triplanenet"
+                                        class="external-link button is-normal is-rounded is-dark">
+                                    <span class="icon">
+                                    <i class="fab fa-github"></i>
+                                    </span>
+                                    <span>Code</span>
+                                    </a>
+                                    </span>
+                                </div>
+                                <div class="content has-text-justified">
+                                    <center>
+                                        <p style="color:brown"><br>Update (02.11): Code for TriPlaneNet v2 is released.</p>
+                                    </center>
+                                    <center>
+                                        <p style="color:brown"><br>Update (29.10): The second version of the article has been accepted to WACV 2024 and features additional contributions and better results. Code for TriPlaneNet v2 is coming soon.</p>
+                                    </center>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="hero teaser">
+            <div class="container is-max-desktop">
+                <div class="hero-body">
+                    <video id="teaser" autoplay muted loop playsinline height="100%">
+                        <source src="../triplanenet/videos/teaser.mp4"
+                            type="video/mp4">
+                    </video>
+                    <h2 class="subtitle has-text-centered">
+                        <span class="dnerf">Triplanenet</span> inverts an input image into the latent
+                        space of 3D GAN for novel view rendering.
+                    </h2>
+                </div>
+            </div>
+        </section>
+        <section class="section">
+            <div class="container is-max-desktop">
+                <!-- Abstract. -->
+                <div class="columns is-centered has-text-centered">
+                    <div class="column is-four-fifths">
+                        <h2 class="title is-3">Abstract</h2>
+                        <div class="content has-text-justified">
+                            <p>
+                                Recent progress in NeRF-based GANs has introduced a number of approaches for high-resolution and high-fidelity generative modeling of human heads with a possibility for novel view rendering.
+                            </p>
+                            <p>
+                                At the same time, one must solve an inverse problem to be able to re-render or modify an existing image or video. Despite the success of universal optimization-based methods for 2D GAN inversion, those applied to 3D GANs may fail to extrapolate the result onto the novel view, whereas optimization-based 3D GAN inversion methods are time-consuming and can require at least several minutes per image. Fast encoder-based techniques, such as those developed for StyleGAN, may also be less appealing due to the lack of identity preservation.
+                            </p>
+                            <p>
+                                Our work introduces a fast technique that bridges the gap between the two approaches by directly utilizing the tri-plane representation presented for the EG3D generative model. In particular, we build upon a feed-forward convolutional encoder for the latent code and extend it with a fully-convolutional predictor of tri-plane numerical offsets. The renderings are similar in quality to the ones produced by optimization-based techniques and outperform the ones by encoder-based methods. As we empirically prove, this is a consequence of directly operating in the tri-plane space, not in the GAN parameter space, while making use of an encoder-based trainable approach. Finally, we demonstrate significantly more correct embedding of a face image in 3D than for all the baselines, further strengthened by a probably symmetric prior enabled during training.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="section">
+            <div class="container is-max-desktop">
+                <!--/ Abstract. -->
+                <!-- Paper video. -->
+                <div class="columns is-centered has-text-centered">
+                    <div class="column is-four-fifths">
+                        <h2 class="title is-3">Video</h2>
+                        <div class="publication-video">
+                            <iframe src="https://www.youtube.com/embed/NttXgBE12ec?rel=0&amp;showinfo=0"
+                                frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                </div>
+                <!--/ Paper video. -->
+            </div>
+        </section>
+        <section class="section">
+            <div class="container is-max-desktop">
+                <!-- Animation. -->
+                <div class="columns is-centered">
+                    <div class="column is-full-width">
+                        <!-- Live-Demo -->
+                        <h2 class="title is-3">
+                            <center>Re-rendering the Input Video</center>
+                        </h2>
+                        <div class="content has-text-justified">
+                            <p>
+                                Using <span class="dnerf">Triplanenet</span>, you can re-render in-the-wild videos from a novel view. 
+                                The framework is capable of representing tiny details of in-the-wild portrait imagery and supports complex facial expressions.
+                            </p>
+                        </div>
+                        <div class="content has-text-centered">
+                            <video id="replay-video"
+                                controls
+                                muted
+                                preload
+                                playsinline
+                                width="90%"
+                                autoplay
+                                loop>
+                                <source src="../triplanenet/videos/novel_video_1.mp4"
+                                    type="video/mp4">
+                            </video>
+                        </div>
+                        <!-- Live-Demo -->
+                    </div>
+                </div>
+                <div class="columns is-centered">
+                    <div class="column is-full-width">
+                        <!-- Live-Demo -->
+                        <h2 class="title is-3">
+                            <center>Live Demo</center>
+                        </h2>
+                        <div class="content has-text-justified">
+                            <p>
+                                The first version of <span class="dnerf">Triplanenet</span> runs in real-time on a single RTX 3090 GPU.
+                            </p>
+                        </div>
+                        <div class="content has-text-centered">
+                            <video id="replay-video"
+                                controls
+                                autoplay
+                                muted
+                                preload
+                                playsinline
+                                width="75%">
+                                <source src="../triplanenet/videos/live_demo.mp4"
+                                    type="video/mp4">
+                            </video>
+                        </div>
+                        <!-- Live-Demo -->
+                    </div>
+                </div>
+                <!--/ Animation. -->
+            </div>
+        </section>
+        <section class="section">
+            <div class="container is-max-desktop">
+                <!-- Overview. -->
+                <div class="columns is-centered" style="margin-top: 15px">
+                    <div class="column is-full-width">
+                        <h2 class="title is-3">
+                            <center>Method Overview</center>
+                        </h2>
+                        <img src="../triplanenet/images/overview.png"/>
+                        <div class="content has-text-justified" style="padding-top: 15px">
+                            <p>Inversion is performed in two phases.</p>
+                            <p>In the initial phase, given an input image, an encoder is utilized to predict pivotal latent code and obtain initial
+                                an input-view RGB image and a mirror-view RGB image.
+                            </p>
+                            <p>In the second phase, the initial input-view reconstruction, the difference between the input image and the input-view reconstructed image, the difference between a mirror image and mirror-view reconstructed image, and the first branch tri-planes features are processed by an auto-encoder to estimate tri-plane offsets. 
+                                The offsets are numerically added to the tri-planes output by the EG3D generator. 
+                                The final reconstruction is obtained by processing the refined tri-planes by the renderer block.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="section">
+            <div class="container is-max-desktop">
+                <h2 class="title is-3">
+                    <center>Reconstruction and Novel View Comparison</center>
+                </h2>
+                <div class="content has-text-justified" style="padding-top: 15px">
+                    <p><span class="dnerf">Triplanenet</span> can reconstruct a face in more detail, 
+                        especially introducing more fidelity for features such as hats, hair, and background.
+                    </p>
+                    <p>For novel view rendering, <span class="dnerf">Triplanenet</span> preserves identity and multi-view 
+                        consistency better compared to other approaches.
+                    </p>
+                    <p>The inference time is given for a single RTX A100 Ti GPU.</p>
+                </div>
+                <div class="container">
+                    <div id="results-carousel" class="carousel results-carousel">
+                        <div class="item item-steve3">
+                            <video poster="" id="steve1" autoplay controls muted loop playsinline height="100%">
+                                <source src="../triplanenet/videos/example1.mp4"
+                                    type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="item item-steve3">
+                            <video poster="" id="steve2" autoplay controls muted loop playsinline height="100%">
+                                <source src="../triplanenet/videos/example2.mp4"
+                                    type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="item item-steve3">
+                            <video poster="" id="steve3" autoplay controls muted loop playsinline height="100%">
+                                <source src="../triplanenet/videos/example3.mp4"
+                                    type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="item item-steve3">
+                            <video poster="" id="steve4" autoplay controls muted loop playsinline height="100%">
+                                <source src="../triplanenet/videos/example4.mp4"
+                                    type="video/mp4">
+                            </video>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="section">
+            <div class="container is-max-desktop">
+                <h2 class="title is-3">
+                    <center>3D Geometry Comparison</center>
+                </h2>
+                <div class="content has-text-justified" style="padding-top: 15px">
+                    <p><span class="dnerf">Triplanenet</span> estimates the view-consistent embedding of a head in 3D from a single image.</p>
+                    <p>The inference time is given for a single RTX A100 Ti GPU.</p>
+                </div>
+                <div class="container">
+                    <div id="results-carousel" class="carousel results-carousel">
+                        <div class="item item-steve3">
+                            <video poster="" id="steve5" autoplay controls muted loop playsinline height="100%">
+                                <source src="../triplanenet/videos/example5.mp4"
+                                    type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="item item-steve3">
+                            <video poster="" id="steve6" autoplay controls muted loop playsinline height="100%">
+                                <source src="../triplanenet/videos/example6.mp4"
+                                    type="video/mp4">
+                            </video>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <script>
+            let vid1 = document.getElementById("steve5");
+            let vid2 = document.getElementById("steve6");
+            vid1.playbackRate = 2;
+            vid2.playbackRate = 2;
+        </script> 
+        
+        <section class="section">
+            <div class="container is-max-desktop">
+                <!-- Concurrent Work. -->
+                <div class="columns is-centered">
+                    <div class="column is-full-width">
+                        <h2 class="title is-3">
+                            <center>Related Links</center>
+                        </h2>
+                        <div class="content has-text-justified">
+                            <p>
+                                For more work on similar tasks, please check out
+                            </p>
+                            <p>
+                                <a href="https://arxiv.org/pdf/2106.05744.pdf">PTI: Pivotal Tuning for Latent-based editing of Real Images</a> introduces an optimization mechanism for solving the StyleGAN inversion task.
+                            </p>
+                            <p>
+                                <a href="https://arxiv.org/pdf/2008.00951.pdf">Encoding in Style: a StyleGAN Encoder for Image-to-Image Translation</a>
+                                presents encoder-based approach to embed input images into W+ space of StyleGAN.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <!--/ Concurrent Work. -->
+            </div>
+        </section>
+        <section class="section" id="BibTeX">
+            <div class="container is-max-desktop content">
+                <h2 class="title is-3">
+                    <center>BibTeX</center>
+                </h2>
+                <pre><code>@article{bhattarai2024triplanenet,
+        title={TriPlaneNet: An Encoder for EG3D Inversion},
+        author={Bhattarai, Ananta R. and Nie{\ss}ner, Matthias and Sevastopolsky, Artem},
+        booktitle={IEEE/CVF Winter Conference on Applications of Computer Vision (WACV)},
+        year={2024}
+}
+                  </code></pre>
+            </div>
+        </section>
+        <footer class="footer">
+            <div class="container">
+                <div class="content has-text-centered">
+                    <a class="icon-link"
+                        href="https://arxiv.org/pdf/2303.13497.pdf">
+                    <i class="fas fa-file-pdf"></i>
+                    </a>
+                    <a class="icon-link" href="https://github.com/anantarb" class="external-link" disabled>
+                    <i class="fab fa-github"></i>
+                    </a>
+                </div>
+                <div class="columns is-centered">
+                    <div class="column is-8">
+                        <div class="content">
+                            <p style="text-align:center">
+                                Source code mainly borrowed from <a
+                                    href="https://keunhong.com">Keunhong Park's <a
+                                    href="https://nerfies.github.io">Nerfies website</a>.
+                            </p>
+                            <p style="text-align:center">
+                                Please contact <a href="mailto:ananta.bhattarai@uni-bielefeld.de">Ananta Bhattarai</a> for feedback and questions.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </body>
+</html>
