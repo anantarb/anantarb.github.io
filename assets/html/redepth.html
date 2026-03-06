@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="description"
+            content="Re-Depth Anything">
+        <meta name="keywords" content="Monocular Depth Estimation, Test Time Optimization, Self Supervised Learning, Knowledge Distillation">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Re-Depth Anything: Test-Time Depth Refinement via Self-Supervised Re-lighting</title>
+        <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+            rel="stylesheet">
+        <link rel="stylesheet" href="../triplanenet/css/bulma.min.css">
+        <link rel="stylesheet" href="../triplanenet/css/bulma-carousel.min.css">
+        <link rel="stylesheet" href="../triplanenet/css/bulma-slider.min.css">
+        <link rel="stylesheet" href="../triplanenet/css/fontawesome.all.min.css">
+        <link rel="stylesheet"
+            href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+        <link rel="stylesheet" href="../triplanenet/css/index.css">
+        <link rel="icon" href="../triplanenet/images/favicon.svg">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script defer src="../triplanenet/js/fontawesome.all.min.js"></script>
+        <script src="../triplanenet/js/bulma-carousel.min.js"></script>
+        <script src="../triplanenet/js/bulma-slider.min.js"></script>
+        <script src="../triplanenet/js/index.js"></script>
+    </head>
+    <body>
+        <section class="hero">
+            <div class="hero-body">
+                <div class="container is-max-desktop">
+                    <div class="columns is-centered">
+                        <div class="column has-text-centered">
+                            <h1 class="title is-1 publication-title">Re-Depth Anything: Test-Time Depth Refinement via Self-Supervised Re-lighting</h1>
+                            <center>
+                                <div class="publication-venue">CVPR 2026 (Findings)</div>
+                            </center>
+                            <div class="is-size-5 publication-authors">
+                                <span class="author-block">
+                                <a href="https://anantarb.github.io/index">Ananta R. Bhattarai</a>,</span>
+                                <span class="author-block">
+                                <a href="http://helge.rhodin.de">Helge Rhodin</a>
+                                </span>
+                            </div>
+                            <div class="is-size-5 publication-authors">
+                                <span class="author-block">Bielefeld University</span>
+                            </div>
+                            <div class="column has-text-centered">
+                                <div class="publication-links">
+                                    <!-- PDF Link. -->
+                                    <span class="link-block">
+                                    <a href="https://arxiv.org/abs/2512.17908"
+                                        class="external-link button is-normal is-rounded is-dark">
+                                    <span class="icon">
+                                    <i class="fas fa-file-pdf"></i>
+                                    </span>
+                                    <span>Paper</span>
+                                    </a>
+                                    </span>
+                                    <!-- Video Link. -->
+                                    <!-- Code Link. -->
+                                    <span class="link-block">
+                                    <a href="https://github.com/anantarb/Re-Depth-Anything"
+                                        class="external-link button is-normal is-rounded is-dark">
+                                    <span class="icon">
+                                    <i class="fab fa-github"></i>
+                                    </span>
+                                    <span>Code</span>
+                                    </a>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="hero teaser">
+            <div class="container is-max-desktop">
+                <div class="hero-body">
+                    <video id="teaser" autoplay muted playsinline height="100%">
+                        <source src="../redepth/videos/teaser.mp4" type="video/mp4">
+                    </video>
+                    <!-- gemini code to pause -->
+                    <script>
+                        const v = document.getElementById('teaser');
+                        const pauseMs = 1500; // pause before restarting
+
+                        v.loop = false;
+
+                        v.addEventListener('ended', async () => {
+                            v.pause();                 // not strictly necessary; video is ended
+                            await new Promise(r => setTimeout(r, pauseMs));
+                            v.currentTime = 0;
+                            v.play().catch(() => {});  // autoplay policies may block play if not muted
+                        });
+                    </script>
+                    <!-- gemini code to pause -->
+                    <h2 class="subtitle has-text-centered">
+                        <span class="dnerf">Re-Depth Anything</span> refines the prediction of the feed-forward monocular depth estimators via novel, self-supervised re-lighting method.
+                    </h2>
+                </div>
+            </div>
+        </section>
+        <section class="section">
+            <div class="container is-max-desktop">
+                <!-- Abstract. -->
+                <div class="columns is-centered has-text-centered">
+                    <div class="column is-four-fifths">
+                        <h2 class="title is-3">Abstract</h2>
+                        <div class="content has-text-justified">
+                            <p>
+                                Monocular depth estimation remains challenging, as foundation models such as Depth Anything V2 (DA-V2) struggle with real-world images that are far from the training distribution.
+                            </p>
+                            <p>
+                                We introduce <span class="dnerf">Re-Depth Anything</span>, a test-time self-supervision framework that bridges this domain gap by fusing foundation models with the powerful priors of large-scale 2D diffusion models. Our method performs label-free refinement directly on the input image by re-lighting the predicted depth map and augmenting the input. This re-synthesis method replaces classical photometric reconstruction by leveraging shape from shading (SfS) cues in a new, generative context with Score Distillation Sampling (SDS). To prevent optimization collapse, our framework updates only intermediate embeddings and the decoder's weights, rather than optimizing the depth tensor directly or fine-tuning the full model.
+                            </p>
+                            <p>
+                                Across diverse benchmarks, <span class="dnerf">Re-Depth Anything</span> yields substantial gains in depth accuracy and realism over DA-V2, and applied on top of Depth Anything 3 (DA3) achieves state-of-the-art results, showcasing new avenues for self-supervision by geometric reasoning.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="section">
+            <div class="container is-max-desktop">
+                <!-- Overview. -->
+                <div class="columns is-centered" style="margin-top: 15px">
+                    <div class="column is-full-width">
+                        <h2 class="title is-3">
+                            <center>Method Overview</center>
+                        </h2>
+                        <img src="../redepth/images/method_overview.png"/>
+                        <div class="content has-text-justified" style="padding-top: 15px">
+                            <p>Our main contribution is the re-lighting module, which randomizes light conditions and shades the estimated geometry on the input. Notably, the re-lighting does not need to look physically accurate, as we are only augmenting the image, not photometrically reconstructing it. 
+                            </p>
+                            <p>Key is also the optimization of the embeddings and decoder, while leaving the encoder frozen.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container is-max-desktop">
+                <h2 class="title is-3">
+                    <center>Qualitative Comparison against DA3</center>
+                </h2>
+                <div class="content has-text-justified" style="padding-top: 15px">
+                    <span class="dnerf">Re-Depth Anything</span> produces visibly superior results not only by enhancing fine-grained details but also removing noise from flat surfaces. Below are qualitative results obtained by applying <span class="dnerf">Re-Depth Anything</span> to DA3MONO-LARGE.
+                </div>
+                <div class="container" style="max-width: 1024px; margin: 0 auto;">
+                    <div id="results-carousel" class="carousel results-carousel">
+                        <div class="item item-steve3" style="padding:16px;">
+                            <img id="steve2" src="../redepth/images/12.png" alt="">
+                        </div>
+                        <div class="item item-steve3" style="padding:16px;">
+                            <img id="steve2" src="../redepth/images/11.png" alt="">
+                        </div>
+                        <div class="item item-steve3" style="padding:16px;">
+                            <img id="steve2" src="../redepth/images/13.png" alt="">
+                        </div>
+                        <div class="item item-steve3" style="padding:16px;">
+                            <img id="steve2" src="../redepth/images/14.png" alt="">
+                        </div>
+                        <div class="item item-steve3" style="padding:16px;">
+                            <img id="steve2" src="../redepth/images/15.png" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="section">
+            <div class="container is-max-desktop">
+                <h2 class="title is-3">
+                    <center>Qualitative Comparison against DA-V2</center>
+                </h2>
+                <div class="content has-text-justified" style="padding-top: 15px">
+                    <span class="dnerf">Re-Depth Anything</span> is a self-supervised refinement strategy applicable to various bases. Below are qualitative results obtained by applying <span class="dnerf">Re-Depth Anything</span> to DA-V2-Small.
+                </div>
+                <div class="container" style="max-width: 1024px; margin: 0 auto;">
+                    <div id="results-carousel" class="carousel results-carousel">
+                        <div class="item item-steve3" style="padding:16px;">
+                            <img id="steve2" src="../redepth/images/1.png" alt="">
+                        </div>
+                        <div class="item item-steve3" style="padding:16px;">
+                            <img id="steve2" src="../redepth/images/2.png" alt="">
+                        </div>
+                        <div class="item item-steve3" style="padding:16px;">
+                            <img id="steve2" src="../redepth/images/3.png" alt="">
+                        </div>
+                        <div class="item item-steve3" style="padding:16px;">
+                            <img id="steve2" src="../redepth/images/4.png" alt="">
+                        </div>
+                        <div class="item item-steve3" style="padding:16px;">
+                            <img id="steve2" src="../redepth/images/5.png" alt="">
+                        </div>
+                        <div class="item item-steve3" style="padding:16px;">
+                            <img id="steve2" src="../redepth/images/6.png" alt="">
+                        </div>
+                        <div class="item item-steve3" style="padding:16px;">
+                            <img id="steve2" src="../redepth/images/7.png" alt="">
+                        </div>
+                        <div class="item item-steve3" style="padding:16px;">
+                            <img id="steve2" src="../redepth/images/8.png" alt="">
+                        </div>
+                        <div class="item item-steve3" style="padding:16px;">
+                            <img id="steve2" src="../redepth/images/9.png" alt="">
+                        </div>
+                        <div class="item item-steve3" style="padding:16px;">
+                            <img id="steve2" src="../redepth/images/10.png" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="section">
+            <div class="container is-max-desktop">
+                <!-- Overview. -->
+                <div class="columns is-centered">
+                    <div class="column is-full-width">
+                        <h2 class="title is-3">
+                            <center>Quantitative Comparison against DA3</center>
+                        </h2>
+                        <div class="content has-text-justified" style="padding-top: 15px">
+                            <p>Comparison against DA3 across datasets. Normal MSE is calculated from spatial depth gradients over pixels with valid neighboring depth values.
+                            </p>
+                        </div>
+                        <center><img src="../redepth/images/table3.png" style="width: 75%; height: auto;"/></center>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="section">
+            <div class="container is-max-desktop">
+                <!-- Overview. -->
+                <div class="columns is-centered">
+                    <div class="column is-full-width">
+                        <h2 class="title is-3">
+                            <center>Quantitative Comparison against DA-V2</center>
+                        </h2>
+                        <div class="content has-text-justified" style="padding-top: 15px">
+                            <p>Comparison against DA-V2 across datasets. Relative error reduction of Ours over DA-V2 is shown in the last row of each dataset.
+                            </p>
+                        </div>
+                        <center><img src="../redepth/images/table.png" style="width: 75%; height: auto;"/></center>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="section">
+            <div class="container is-max-desktop">
+                <!-- Concurrent Work. -->
+                <div class="columns is-centered">
+                    <div class="column is-full-width">
+                        <h2 class="title is-3">
+                            <center>Acknowledgements</center>
+                        </h2>
+                        <div class="content has-text-justified">
+                            <p>
+                                Our work builds on top of amazing papers and codebases. Please check out
+                            </p>
+                            <p>
+                                <a href="https://github.com/DepthAnything/Depth-Anything-V2">Depth Anything V2</a> a SOTA monocular depth estimator.
+                            </p>
+                            <p>
+                                <a href="https://github.com/ByteDance-Seed/Depth-Anything-3">Depth Anything 3</a> a model that predicts spatially consistent geometry from arbitrary visual inputs, with or without known camera poses.
+                            </p>
+                            <p>
+                                <a href="https://github.com/threestudio-project/threestudio">threestudio</a> a unified framework for 3D content creation from text prompts, single images, and few-shot images, by lifting 2D text-to-image generation models.
+                            </p>
+                            <p>
+                                <a href="https://github.com/huggingface">Hugging Face</a> a platform that provides libraries for many machine learning tasks like text generation, image generation, and many more.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <!--/ Concurrent Work. -->
+            </div>
+        </section>
+        <section class="section" id="BibTeX">
+            <div class="container is-max-desktop content">
+                <h2 class="title is-3">
+                    <center>BibTeX</center>
+                </h2>
+                <pre><code>@article{bhattarai2025redepth,
+        title={Re-Depth Anything: Test-Time Depth Refinement via Self-Supervised Re-lighting},
+        author={Ananta R. Bhattarai and Helge Rhodin},
+        journal={ArXiv},
+        year={2025},
+        volume={abs/2512.17908}
+}
+                  </code></pre>
+            </div>
+        </section>
+        <footer class="footer">
+            <div class="container">
+                <div class="content has-text-centered">
+                    <a class="icon-link"
+                        href="https://arxiv.org/pdf/2512.17908">
+                    <i class="fas fa-file-pdf"></i>
+                    </a>
+                    <a class="icon-link" href="https://github.com/anantarb" class="external-link" disabled>
+                    <i class="fab fa-github"></i>
+                    </a>
+                </div>
+                <div class="columns is-centered">
+                    <div class="column is-8">
+                        <div class="content">
+                            <p style="text-align:center">
+                                Source code mainly borrowed from <a
+                                    href="https://keunhong.com">Keunhong Park's <a
+                                    href="https://nerfies.github.io">Nerfies website</a>.
+                            </p>
+                            <p style="text-align:center">
+                                Please contact <a href="mailto:ananta.bhattarai@uni-bielefeld.de">Ananta Bhattarai</a> for feedback and questions.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </body>
+</html>
