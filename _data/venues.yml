@@ -1,0 +1,30 @@
+# "ARXIV":
+#   url: https://arxiv.org
+#   color: "#00369f"
+
+# "ICML":
+#   color: "#00369f"
+#   url: https://icml.cc
+
+# "AAAI":
+#   color: "#00369f"
+#   url: https://aaai.org/conference/aaai/aaai-19/
+
+# "WACV":
+#   color: "#00369f"
+#   url: https://wacv2024.thecvf.com
+
+# "SAFECOMP":
+#   color: "#00369f"
+#   url: https://safecomp2023.cnrs.fr
+
+# "ICLR":
+#   color: "#00369f"
+#   url: https://iclr.cc
+
+# "In Submission":
+#   color: "#00369f"
+
+# "CVPR (Findings)":
+#   color: "#00369f"
+#   url: https://cvpr.thecvf.com
